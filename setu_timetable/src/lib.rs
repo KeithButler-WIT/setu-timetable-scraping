@@ -18,6 +18,8 @@ pub async fn scrape_setu_timetable() -> Result<(), Box<dyn Error>> {
     search_timetable(&driver).await?;
     tokio::time::sleep(Duration::from_secs(2)).await;
 
+    tokio::time::sleep(Duration::from_secs(360)).await;
+
     // scrape_all(driver).await?;
 
     Ok(())
@@ -33,9 +35,13 @@ async fn initialize_driver() -> Result<WebDriver, WebDriverError> {
 async fn search_timetable(driver: &WebDriver) -> Result<(), WebDriverError> {
 // click_choose_place(driver).await?;
     click_school(driver).await?;
+    tokio::time::sleep(Duration::from_secs(2)).await;
     click_department(driver).await?;
+    tokio::time::sleep(Duration::from_secs(2)).await;
     click_programme(driver).await?;
+    tokio::time::sleep(Duration::from_secs(2)).await;
     click_group(driver).await?;
+    tokio::time::sleep(Duration::from_secs(2)).await;
 
     // write_place(driver, place).await?;
     //
