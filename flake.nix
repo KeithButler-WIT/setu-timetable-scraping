@@ -14,8 +14,11 @@
       {
         defaultPackage = naersk-lib.buildPackage ./.;
         devShell = with pkgs; mkShell {
-          buildInputs = [ geckodriver cargo rustc rustfmt pre-commit rustPackages.clippy ];
+          buildInputs = [ cargo rustc rustfmt pre-commit rustPackages.clippy ];
           RUST_SRC_PATH = rustPlatform.rustLibSrc;
+          shellHook = ''
+            ${pkgs.geckodriver}/bin/geckodriver  -p 9515
+          '';
         };
       });
 }
