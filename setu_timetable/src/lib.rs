@@ -33,6 +33,9 @@ async fn initialize_driver() -> Result<WebDriver, WebDriverError> {
 
 async fn search_timetable(driver: &WebDriver) -> Result<(), WebDriverError> {
 // click_choose_place(driver).await?;
+    // TODO Create config file
+    // TODO check config file for data
+    // TODO Config file
     click_css(driver, "#cboSchool > option:nth-child(7)").await?;
     tokio::time::sleep(Duration::from_secs(1)).await;
     click_css(driver, "#CboDept > option:nth-child(3)").await?;
