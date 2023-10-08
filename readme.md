@@ -1,6 +1,11 @@
 # SETU Timetable Scraping
 
-Currently the scraper only gets the timetable for Applied Computing (Bsc) Year 4
+Currently, the scraper only gets the timetable for Applied Computing (Bsc) Year 4
 
-[https://github.com/itehax/rust-scraping]
+# Dependencies 
+- [geckodriver](https://github.com/mozilla/geckodriver)
+
+# Credits
+
+https://github.com/itehax/rust-scraping
 
