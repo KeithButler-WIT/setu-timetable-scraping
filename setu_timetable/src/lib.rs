@@ -20,6 +20,7 @@ pub async fn scrape_setu_timetable() -> Result<(), Box<dyn Error>> {
     tokio::time::sleep(Duration::from_secs(360)).await;
 
     // scrape_all(driver).await?;
+    driver.quit().await?;
 
     Ok(())
 }
