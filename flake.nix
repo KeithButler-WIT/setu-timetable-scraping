@@ -1,35 +1,39 @@
 {
   inputs = {
-    naersk.url = "github:nix-community/naersk/master";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    systems.url = "github:nix-systems/default";
+    devenv.url = "github:cachix/devenv";
   };
 
-  outputs = { self, nixpkgs, utils, naersk }:
-    utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs { inherit system; };
-        naersk-lib = pkgs.callPackage naersk { };
-      in
-      {
-        defaultPackage = naersk-lib.buildPackage ./.;
-        devShell = with pkgs; mkShell {
-          buildInputs = [ geckodriver cargo rustc rustfmt pre-commit rustPackages.clippy ];
-          RUST_SRC_PATH = rustPlatform.rustLibSrc;
-          # shellHook = ''
-            # ${pkgs.geckodriver}/bin/geckodriver  -p 9515 &
-          # '';
+  outputs = {
+    nixpkgs,
+    devenv,
+    systems,
+    ...
+  } @ inputs: let
+    forEachSystem = nixpkgs.lib.genAttrs (import systems);
+  in {
+    devShells =
+      forEachSystem
+      (system: let
+        pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        default = devenv.lib.mkShell {
+          inherit inputs pkgs;
+          modules = [
+            {
+              # https://devenv.sh/reference/options/
+              dotenv.disableHint = true;
 
-          configurePhase = ''
-          '';
+              # setup openssl for reqwest (if used)
+              env = {
+                PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+              };
 
-          buildPhase = ''
-            ${pkgs.geckodriver}/bin/geckodriver  -p 9515 &
-            cargo build
-          '';
-
-          installPhase = ''
-          '';
+              languages.rust.enable = true;
+            }
+          ];
         };
       });
+  };
 }
