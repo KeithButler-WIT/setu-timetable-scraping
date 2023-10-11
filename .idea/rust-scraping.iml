@@ -7,6 +7,8 @@
       <excludeFolder url="file://$MODULE_DIR$/setu_timetable/target" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/setu-timetable-scraper/target" />
+      <excludeFolder url="file://$MODULE_DIR$/.devenv" />
+      <excludeFolder url="file://$MODULE_DIR$/.direnv" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
